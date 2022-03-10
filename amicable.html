@@ -27,9 +27,9 @@
 
     <script>
 	
-	const factors1 = [];
-	const factors2 = [];
-	const numbers = [];
+	factors1 = [];
+	factors2 = [];
+	numbers = [];
 
 	function runProgram() {
 		
@@ -49,6 +49,7 @@
 		findFactors();
 		checkAmicable(getSum(factors1), getSum(factors2));
 		displayFactors();
+		clearFactors();
 		return true;
 	}
 
@@ -103,6 +104,11 @@
 
 		document.getElementById("factors2").innerHTML = "<br />Factors for " + numbers[1] + ": ";
 		document.getElementById("factors2Arr").innerHTML = factors2;	
+	}
+
+	function clearFactors() {  // clear the factor arrays
+		factors1 = [];
+		factors2 = [];
 	}
 
 	
