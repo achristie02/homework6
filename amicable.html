@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Amicable Numbers</title>
+<style type="text/css">
+    html,body {font-size: 20px;}
+</style>
+</head>
+
+<body>
+	<form 
+    onsubmit="return runProgram()" 
+    name = "data"
+  	method="post">
+  		First number: <input type = "text" name="num1"> <br />
+  		Second number: <input type = "text" name="num2"> <br />
+  		<input type = "button" onclick="runProgram()" value = "Submit">
+  	</form>
+
+	<p id="amicable"></p>
+	<p id="factors1">Factors of Number 1: </p>
+	<p id="factors1Arr"></p>
+	<p id="factors2">Factors of Number 2: </p>
+	<p id="factors2Arr"></p>
+	
+
+    <script>
+	
+	const factors1 = [];
+	const factors2 = [];
+	const numbers = [];
+
+	function runProgram() {
+		
+		if (document.data.num1.value == "")	{			// check if field is blank		
+		alert("Must enter a value for the number");		// tell user what is wrong
+		document.data.num1.focus();					// put cursor in text box
+		document.data.num1.select();					// highlight text in the box
+		return false;										// prevent form action
+	} else if (document.data.num2.value == "") {				// check if field is blank		
+		alert("Must enter a value for the number");		// tell user what is wrong
+		document.data.num2.focus();					// put cursor in text box
+		document.data.num2.select();					// highlight text in the box
+		return false;										// prevent form action
+	}
+
+		getNums();
+		findFactors();
+		checkAmicable(getSum(factors1), getSum(factors2));
+		displayFactors();
+		return true;
+	}
+
+	function getNums() {
+		num1 = document.data.num1.value;  // get values from input
+		num2 = document.data.num2.value;
+
+		numbers[0] = num1;
+		numbers[1] = num2;
+		numbers.sort(function(a, b) {
+  			return a - b;
+		});
+
+	}
+
+	function findFactors() { // find the factors for each number and store in array
+		for (i = 0; i < numbers[1]; i++) {
+			if (isAFactor(i, numbers[0]) == true) {
+				factors1.push(i);
+			}
+			if (isAFactor(i, numbers[1]) == true) {
+				factors2.push(i);
+			}	
+		}
+	}
+
+	function isAFactor(x,y) { // check if x is a factor of y
+		if (y % x == 0 && x != y) {
+            return true;
+        }
+	}
+
+	function getSum(factors) {  // get the sum of an array of factors
+		sum = 0;
+		for (i = 0; i < factors.length; i++) {
+			sum += factors[i];
+		}
+		return sum;
+	}
+
+	function checkAmicable(sum1, sum2) { // check if the two numbers are amicable based on the sum of their factors
+		if (sum1 == numbers[1] && sum2 == numbers[0]) {
+			document.getElementById("amicable").innerHTML = "The numbers: " + numbers[0] + " and " + numbers[1] + " are amicable <br />";
+		} else {
+			document.getElementById("amicable").innerHTML = "The numbers: " + numbers[0] + " and " + numbers[1] + " are not amicable <br />";
+		}
+	}
+
+	function displayFactors() {  // output the factors
+		document.getElementById("factors1").innerHTML = "Factors for " + numbers[0] + ": ";	
+		document.getElementById("factors1Arr").innerHTML = factors1;
+
+		document.getElementById("factors2").innerHTML = "<br />Factors for " + numbers[1] + ": ";
+		document.getElementById("factors2Arr").innerHTML = factors2;	
+	}
+
+	
+    </script>
+
+
+</body>
+</html>
